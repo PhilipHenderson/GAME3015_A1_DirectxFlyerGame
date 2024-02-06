@@ -1,0 +1,5 @@
+﻿  World.cpp
+C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Assignment1_Helper\Solution\Project\World.cpp(28,34): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Assignment1_Helper\Solution\Project\World.cpp(30,39): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Assignment1_Helper\Solution\Project\World.cpp(38,30): warning C4305: 'argument': truncation from 'double' to 'float'
+  Project.vcxproj -> C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Assignment1_Helper\Solution\x64\Debug\Project.exe
