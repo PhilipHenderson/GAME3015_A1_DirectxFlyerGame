@@ -1,5 +1,6 @@
 #include "Aircraft.hpp"
 #include "Game.hpp"
+#include "World.hpp"
 
 Aircraft::Aircraft(Type type, Game* game) : Entity(game)
 , mType(type)
@@ -45,38 +46,61 @@ void Aircraft::drawCurrent() const
 	//cmdList->DrawIndexedInstanced(ri->IndexCount, 1, ri->StartIndexLocation, ri->BaseVertexLocation, 0);
 
 }
-void Aircraft::updateCurrent(const GameTimer& gt) {
-	// Check if the aircraft is an enemy
-	if (mType == Aircraft::Raptor) {
-		// Parameters for circular movement
-		static float angle = 0.0f; // Current angle
-		float circleRadius = 0.1f; // Radius of the circle
-		float speed = -0.1f; // Speed of movement along the circle
 
-		// Calculate the delta angle for this frame
-		float deltaAngle = XM_2PI * speed * gt.DeltaTime();
+void Aircraft::updateCurrent(const GameTimer& gt) 
+{
+	static const float followThreshold = 20.0f;
+	static const float patrolSpeed = 0.1f;
+	static const float followSpeed = 5.0f;
+	static float patrolAngle = 0.0f;
+	static bool isFollowing = false;
+	static float transitionSpeed = 1.0f;
 
-		// Update the current angle
-		angle += deltaAngle;
+	XMFLOAT3 playerPosition = game->getPlayerAircraft()->getWorldPosition();
+	XMFLOAT3 enemyPosition = getWorldPosition();
 
-		// Calculate the new position
-		float newX = getWorldPosition().x + circleRadius * cosf(angle) / 100.0f;
-		float newZ = getWorldPosition().z + circleRadius * sinf(angle) / 100.0f;
+	// Initialize movementDirection to zero
+	XMVECTOR movementDirection = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
 
-		// Set the new position
-		setPosition(newX, getWorldPosition().y, newZ);
+	XMVECTOR dirToPlayer = XMVectorSubtract(XMLoadFloat3(&playerPosition), XMLoadFloat3(&enemyPosition));
+	float distanceToPlayer = XMVectorGetX(XMVector3Length(dirToPlayer));
 
+	if (mType == Aircraft::Raptor) 
+	{
+		if (distanceToPlayer < followThreshold && !isFollowing) 
+		{
+			isFollowing = true;
+		}
+		else if (distanceToPlayer >= followThreshold && isFollowing) 
+		{
+			isFollowing = false;
+			// Optionally reset patrolAngle here if needed for smoother transition
+		}
 
-		setWorldRotation(0, -angle + XM_PIDIV2, 0);
+		if (isFollowing) 
+		{
+			dirToPlayer = XMVector3Normalize(dirToPlayer);
+			movementDirection = XMVectorScale(dirToPlayer, followSpeed * gt.DeltaTime());
+			float newYaw = atan2(XMVectorGetZ(dirToPlayer), XMVectorGetX(dirToPlayer));
+			setWorldRotation(0, newYaw, 0);
+		}
+		else 
+		{
+			patrolAngle += patrolSpeed * gt.DeltaTime();
+			enemyPosition.x = 5.0f * cosf(patrolAngle);
+			enemyPosition.z = 5.0f * sinf(patrolAngle);
+			// Re-initialize movementDirection for patrolling
+			movementDirection = XMVectorSet(cosf(patrolAngle), 0.0f, sinf(patrolAngle), 0.0f);
+			setWorldRotation(0, -patrolAngle, 0);
+		}
+
+		XMVECTOR newPos = XMVectorAdd(XMLoadFloat3(&enemyPosition), movementDirection);
+		XMStoreFloat3(&enemyPosition, newPos);
+		setPosition(enemyPosition.x, enemyPosition.y, enemyPosition.z);
 	}
 
-	// Call base class update to handle common update behavior
 	Entity::updateCurrent(gt);
-
-	// Any additional player-specific update logic can go here
 }
-
-
 
 void Aircraft::buildCurrent()
 {

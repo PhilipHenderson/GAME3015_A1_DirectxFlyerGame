@@ -79,6 +79,7 @@ public:
 	void adjustYaw(float angle);
 	void adjustPitch(float angle);
 	void adjustRoll(float angle);
+
 private:
 	virtual void			updateCurrent(const GameTimer& gt);
 	void					updateChildren(const GameTimer& gt);

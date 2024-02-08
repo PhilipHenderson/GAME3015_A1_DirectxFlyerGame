@@ -80,7 +80,7 @@ private:
 
 	PassConstants mMainPassCB;
 
-	XMFLOAT3 mEyePos = { 0.0f, 0.0f, -10.0f };
+	XMFLOAT3 mEyePos = { 0.0f, 0.0f, -5.0f };
 	XMFLOAT4X4 mView = MathHelper::Identity4x4();
 	XMFLOAT4X4 mProj = MathHelper::Identity4x4();
 
@@ -96,4 +96,6 @@ public:
 	std::vector<std::unique_ptr<RenderItem>>& getRenderItems() { return mAllRitems; }
 	std::unordered_map<std::string, std::unique_ptr<Material>>& getMaterials() { return mMaterials; }
 	std::unordered_map<std::string, std::unique_ptr<MeshGeometry>>& getGeometries() { return mGeometries; }
+	Aircraft* getPlayerAircraft() const { return playerAircraft; }
+	Aircraft* playerAircraft;
 };

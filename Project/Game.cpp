@@ -189,7 +189,7 @@ void Game::OnMouseMove(WPARAM btnState, int x, int y)
 
 void Game::OnKeyboardInput(const GameTimer& gt)
 {
-	Aircraft* playerAircraft = mWorld.getPlayerAircraft();
+	playerAircraft = mWorld.getPlayerAircraft();
 	if (!playerAircraft) return;
 
 	const float dt = gt.DeltaTime();
