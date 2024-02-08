@@ -158,3 +158,8 @@ void SceneNode::adjustPitch(float angle)
 {
 	mWorldRotation.x += angle;
 }
+
+void SceneNode::adjustRoll(float angle)
+{
+	mWorldRotation.z += angle;
+}

@@ -198,10 +198,11 @@ void Game::OnKeyboardInput(const GameTimer& gt)
 	// Get the current orientation of the aircraft
 	float yaw = playerAircraft->getYaw();
 	float pitch = playerAircraft->getPitch();
+	float roll = playerAircraft->getRoll();
 
 	// Calculate the forward movement direction based on the aircraft's orientation
 	XMVECTOR forwardVec = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f); // Default forward vector
-	XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYaw(pitch, yaw, 0.0f);
+	XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
 	forwardVec = XMVector3TransformNormal(forwardVec, rotationMatrix);
 
 	// Convert the forward vector to a direction the aircraft can use for movement
@@ -247,7 +248,7 @@ void Game::UpdateCamera(const GameTimer& gt) {
 		float playerPitch = playerAircraft->getPitch();
 
 		// Define the camera offset from the player
-		XMFLOAT3 cameraOffset(0.0f, 0.5f, -1.0f);
+		XMFLOAT3 cameraOffset(0.0f, 1.0f, -2.0f);
 
 		// Calculate the rotation matrix based on player's yaw and pitch
 		XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYaw(playerPitch, playerYaw, 0.0f);
@@ -400,7 +401,7 @@ void Game::LoadTextures()
 	//Desert
 	auto DesertTex = std::make_unique<Texture>();
 	DesertTex->Name = "DesertTex";
-	DesertTex->Filename = L"../../Textures/grass.dds";
+	DesertTex->Filename = L"../../Textures/Desert.dds";
 	ThrowIfFailed(DirectX::CreateDDSTextureFromFile12(md3dDevice.Get(),
 		mCommandList.Get(), DesertTex->Filename.c_str(),
 		DesertTex->Resource, DesertTex->UploadHeap));
@@ -529,7 +530,7 @@ void Game::BuildShapeGeometry()
 	GeometryGenerator::MeshData box = geoGen.CreateBox(1, 0, 1, 1);
 
 	//step1: 
-	GeometryGenerator::MeshData grid = geoGen.CreateGrid(460.0f, 460.0f, 50, 50);
+	GeometryGenerator::MeshData grid = geoGen.CreateGrid(460.0f, 460.0f, 10, 20);
 
 	//GeometryGenerator::MeshData grid = geoGen.CreateGrid(160.0f, 160.0f, 10, 10);
 
@@ -698,7 +699,7 @@ void Game::BuildMaterials()
 	Desert->MatCBIndex = 2;
 	Desert->DiffuseSrvHeapIndex = 2;
 	Desert->DiffuseAlbedo = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	Desert->FresnelR0 = XMFLOAT3(0.05f, 0.05f, 0.05f);
+	Desert->FresnelR0 = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	Desert->Roughness = 0.2f;
 
 	mMaterials["Desert"] = std::move(Desert);

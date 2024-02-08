@@ -16,6 +16,7 @@ public:
 	// Getter for the player's aircraft
 	Aircraft* getPlayerAircraft() const { return mPlayerAircraft; }
 
+
 private:
 	enum Layer
 	{

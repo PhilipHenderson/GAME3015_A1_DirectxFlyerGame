@@ -2,7 +2,7 @@
 #include "Game.hpp"
 
 Aircraft::Aircraft(Type type, Game* game) : Entity(game)
-	, mType(type)
+, mType(type)
 {
 	switch (type)
 	{
@@ -19,7 +19,7 @@ Aircraft::Aircraft(Type type, Game* game) : Entity(game)
 }
 
 void Aircraft::drawCurrent() const
-{	
+{
 
 	//auto ri = ritems[i];
 
@@ -45,6 +45,38 @@ void Aircraft::drawCurrent() const
 	//cmdList->DrawIndexedInstanced(ri->IndexCount, 1, ri->StartIndexLocation, ri->BaseVertexLocation, 0);
 
 }
+void Aircraft::updateCurrent(const GameTimer& gt) {
+	// Check if the aircraft is an enemy
+	if (mType == Aircraft::Raptor) {
+		// Parameters for circular movement
+		static float angle = 0.0f; // Current angle
+		float circleRadius = 0.1f; // Radius of the circle
+		float speed = -0.1f; // Speed of movement along the circle
+
+		// Calculate the delta angle for this frame
+		float deltaAngle = XM_2PI * speed * gt.DeltaTime();
+
+		// Update the current angle
+		angle += deltaAngle;
+
+		// Calculate the new position
+		float newX = getWorldPosition().x + circleRadius * cosf(angle) / 100.0f;
+		float newZ = getWorldPosition().z + circleRadius * sinf(angle) / 100.0f;
+
+		// Set the new position
+		setPosition(newX, getWorldPosition().y, newZ);
+
+
+		setWorldRotation(0, -angle + XM_PIDIV2, 0);
+	}
+
+	// Call base class update to handle common update behavior
+	Entity::updateCurrent(gt);
+
+	// Any additional player-specific update logic can go here
+}
+
+
 
 void Aircraft::buildCurrent()
 {
@@ -64,15 +96,10 @@ void Aircraft::buildCurrent()
 }
 
 XMFLOAT3 Aircraft::getForwardVector() const {
-	// Assuming mWorldRotation.y contains the yaw angle
 	float yaw = mWorldRotation.y;
 	return XMFLOAT3(sinf(yaw), 0.0f, cosf(yaw));
 }
 
-void Aircraft::adjustRoll(float amount) 
-{
-	mRoll += amount;
-}
 
 
 

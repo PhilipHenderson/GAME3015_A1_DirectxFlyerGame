@@ -20,23 +20,26 @@ public:
 	XMFLOAT3 getForwardVector() const;
 	float getPitch() const 
 	{
-		XMFLOAT3 rotation = getWorldRotation(); // Assuming this function exists and returns the world rotation
-		return rotation.x; // Return the Pitch component
+		XMFLOAT3 rotation = getWorldRotation(); 
+		return rotation.x; // Return the Pitch
 	}
 	float getYaw() const 
 	{
-		XMFLOAT3 rotation = getWorldRotation(); // Assuming this function exists and returns the world rotation
-		return rotation.y; // Return the Yaw component
+		XMFLOAT3 rotation = getWorldRotation(); 
+		return rotation.y; // Return the Yaw
 	}
-
-	float mRoll;
-	void adjustRoll(float amount);
+	float getRoll() const
+	{
+		XMFLOAT3 rotation = getWorldRotation();
+		return rotation.z; // Return the Yaw
+	}
 
 private:
 	virtual void		drawCurrent() const;
 	virtual void		buildCurrent();
 	XMFLOAT3 mPosition;
 
+	void updateCurrent(const GameTimer& gt);
 private:
 	Type				mType;
 	std::string			mSprite;
