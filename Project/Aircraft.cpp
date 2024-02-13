@@ -123,7 +123,3 @@ XMFLOAT3 Aircraft::getForwardVector() const {
 	float yaw = mWorldRotation.y;
 	return XMFLOAT3(sinf(yaw), 0.0f, cosf(yaw));
 }
-
-
-
-

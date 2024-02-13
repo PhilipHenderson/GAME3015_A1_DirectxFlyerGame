@@ -1,3 +1,15 @@
 ﻿  Aircraft.cpp
 C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Game3015_A1_HendersonPhilip\Project\Project\Aircraft.cpp(111,52): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  Game.cpp
+C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Game3015_A1_HendersonPhilip\Project\Project\Game.cpp(24,21): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Game3015_A1_HendersonPhilip\Project\Project\Game.cpp(576,23): warning C4305: '=': truncation from 'double' to 'float'
+  SceneNode.cpp
+  SpriteNode.cpp
+C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Game3015_A1_HendersonPhilip\Project\Project\SpriteNode.cpp(20,52): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  World.cpp
+C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Game3015_A1_HendersonPhilip\Project\Project\World.cpp(34,37): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Game3015_A1_HendersonPhilip\Project\Project\World.cpp(36,42): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Game3015_A1_HendersonPhilip\Project\Project\World.cpp(44,33): warning C4305: 'argument': truncation from 'double' to 'float'
+  main.cpp
+  Generating Code...
   Project.vcxproj -> C:\Users\Phili\Desktop\School\Winter2024\GAME3015 - Engines\Game3015_A1_HendersonPhilip\Project\x64\Debug\Project.exe
